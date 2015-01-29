@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+						   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	   
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<util:list id="packagesToScan">
+      <value>org.jasig.cas.services</value>
+      <!--<value>org.jasig.cas.ticket</value>
+      <value>org.jasig.cas.adaptors.jdbc</value>-->
+    </util:list>
+  
+	<bean id="factoryBean"
+		  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+		  p:dataSource-ref="dataSource"
+		  p:jpaVendorAdapter-ref="jpaVendorAdapter"
+		  p:packagesToScan-ref="packagesToScan">
+		<property name="jpaProperties">
+		  <props>
+			<prop key="hibernate.dialect">${database.dialect}</prop>
+			<prop key="hibernate.hbm2ddl.auto">update</prop>
+			<prop key="hibernate.jdbc.batch_size">${database.batchSize}</prop>
+		  </props>
+		</property>
+	</bean>
+
+	<bean id="jpaVendorAdapter"
+		  class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+		  p:generateDdl="true"
+		  p:showSql="true" />
+
+	<bean id="serviceRegistryDao"
+		  class="org.jasig.cas.services.JpaServiceRegistryDaoImpl" />
+
+	<bean id="transactionManager"
+		  class="org.springframework.orm.jpa.JpaTransactionManager"
+		  p:entityManagerFactory-ref="factoryBean" />
+
+	<!--
+	   | Injects EntityManager/Factory instances into beans with
+	   | @PersistenceUnit and @PersistenceContext
+	-->
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	
+	<bean id="h2WebServer" 
+	      class="org.h2.tools.Server" 
+		  factory-method="createWebServer" 
+		  init-method="start" 
+		  destroy-method="stop">
+      <constructor-arg value="-web,-webAllowOthers,-webPort,8082"/>
+	</bean>
+		
+	<bean id="dataSource" class="org.h2.jdbcx.JdbcConnectionPool" destroy-method="dispose">
+	  <constructor-arg>
+	    <bean class="org.h2.jdbcx.JdbcDataSource">
+	      <property name="URL" value="jdbc:h2:./data/services;AUTO_SERVER=TRUE"/>
+	      <property name="user" value="sa"/>
+	      <property name="password" value=""/>
+	    </bean>
+	  </constructor-arg>
+    </bean>
+
+</beans>

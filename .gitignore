@@ -21,3 +21,6 @@ perfStats.log
 # CAS Management log files
 
 cas-management.log
+
+# H2 database files
+*.db

@@ -6,8 +6,10 @@
   <properties>
     <global.version>1.0-SNAPSHOT</global.version>
     <cas.version>4.0.0</cas.version>
+	<commons.dbcp.version>1.4</commons.dbcp.version>
+	<hibernate.version>3.6.0.Final</hibernate.version>
+	<c3p0.version>0.9.1.2</c3p0.version>
   </properties>
- 
  
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.co.g4me.cas</groupId>
@@ -21,32 +23,41 @@
       <url>http://oss.sonatype.org/content/repositories/releases/</url>
     </repository>
   </repositories>
+  
+  <dependencies>  
+	
+	<dependency>
+	  <groupId>commons-dbcp</groupId>
+	  <artifactId>commons-dbcp</artifactId>
+	  <version>${commons.dbcp.version}</version>
+	  <scope>runtime</scope>
+	</dependency>
+	 
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-core</artifactId>
+		<version>${hibernate.version}</version>
+		<scope>compile</scope>
+	</dependency>
+	 
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-entitymanager</artifactId>
+		<version>${hibernate.version}</version>
+	</dependency>
 
-  <build>
-    <plugins>
- 
-      <plugin>
-        <groupId>org.apache.tomcat.maven</groupId>
-        <artifactId>tomcat7-maven-plugin</artifactId>
-        <version>2.2</version>
-        <configuration>
-          <port>8080</port>
-          <httpsPort>8443</httpsPort>
-          <keystoreFile>${user.home}/.keystore</keystoreFile>
-          <keystorePass>changeit</keystorePass>
-          <webapps> 
-            <webapp> 
-              <groupId>uk.co.g4me.cas</groupId> 
-              <artifactId>cas-server</artifactId> 
-              <version>${global.version}</version> 
-              <type>war</type>    
-              <asWebapp>true</asWebapp> 
-            </webapp> 
-          </webapps>
-        </configuration>
-      </plugin>
- 
-    </plugins>
-  </build>
+	<dependency>
+	  <groupId>com.h2database</groupId>
+	  <artifactId>h2</artifactId>
+	  <version>1.4.184</version>
+	</dependency>
+	
+  </dependencies>
+  
+  <modules>
+	<module>cas-services</module>
+	<module>cas-server</module>
+	<module>tomcat</module>
+  </modules>
  
 </project>

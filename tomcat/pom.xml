@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd ">
+		 
+  <parent>
+    <groupId>uk.co.g4me.cas</groupId>
+    <artifactId>cas-maven-overlay</artifactId>
+    <version>${global.version}</version>
+  </parent>
+ 
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>tomcat</artifactId>
+  <packaging>pom</packaging>
+  
+  <build>
+  
+    <plugins>
+ 
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <port>8080</port>
+          <httpsPort>8443</httpsPort>
+          <keystoreFile>${user.home}/.keystore</keystoreFile>
+          <keystorePass>changeit</keystorePass>
+          <webapps> 
+            <webapp> 
+              <groupId>uk.co.g4me.cas</groupId> 
+              <artifactId>cas-server</artifactId> 
+              <version>${global.version}</version> 
+              <type>war</type>    
+              <asWebapp>true</asWebapp> 
+            </webapp>
+			<webapp> 
+			  <groupId>uk.co.g4me.cas</groupId> 
+			  <artifactId>cas-services</artifactId> 
+			  <version>${global.version}</version> 
+			  <type>war</type>    
+			  <asWebapp>true</asWebapp> 
+			</webapp>
+          </webapps>
+        </configuration>
+      </plugin>
+ 
+    </plugins>	
+	  
+  </build>  
+ 
+</project>
