@@ -17,3 +17,7 @@ target/
 # CAS Server log files
 cas.log
 perfStats.log
+
+# CAS Management log files
+
+cas-management.log
