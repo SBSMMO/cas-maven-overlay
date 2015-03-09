@@ -1,0 +1,10 @@
+@import url("cas.css")
+
+header #logo { background: none; }
+header h1 { background: #92d13d; }
+
+#fm1 .row .btn-submit { background: #92d13d; color: white; }
+#fm1 .row .btn-reset { display: none; }
+
+#sidebar .sidebar-content { display: none; }
+footer { display: none; }

@@ -1,0 +1,26 @@
+table {
+  text-align: center;
+}
+
+table th {
+  background-color: #f5f5f5;
+  text-align: center;
+}
+
+.panel {
+  margin-top: 40px;
+}
+
+.center {
+  width: 80%;
+  margin-left:auto; 
+  margin-right:auto;
+}
+
+.fa-check {
+  color: green;
+}
+
+.fa-close {
+  color: red;
+}
