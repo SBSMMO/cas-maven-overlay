@@ -7,8 +7,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 scalaVersion := "2.11.1"
 
 libraryDependencies ++= Seq(
-  "org.pac4j" % "play-pac4j_scala2.11" % "1.3.0",         // CAS server interface library
-  "org.pac4j" % "pac4j-cas" % "1.6.0",                    // CAS protocol
+  "uk.co.g4me.cas" % "client-lib_2.11" % "1.0.0",		  // CAS Client Library
   "com.adrianhurt" %% "play-bootstrap3" % "0.4",          // Play Twitter Bootstrap integration
   "org.webjars" % "font-awesome" % "4.2.0",               // Font awesome
   cache
