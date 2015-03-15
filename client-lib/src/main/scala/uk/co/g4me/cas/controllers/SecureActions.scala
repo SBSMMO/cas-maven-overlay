@@ -73,7 +73,7 @@ trait SecureActions extends Results {
   
     implicit val handler: SecureHandler = new DefaultSecureHandler
   
-    override def composeAction[A](action: Action[A]) = PreAuthenticate(Authenticate(action))
+    override def composeAction[A](action: Action[A]) = Authenticate(PreAuthenticate(action))
   }
   
   class PreAuthorise[A](action: Action[A], implicit val handler: SecureHandler) extends Action[A] {
