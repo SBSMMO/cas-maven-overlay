@@ -19,11 +19,5 @@ trait SecureHandler {
   
   // Things to check before we attempt authorisation
   def beforeAuthorisationCheck[A](request: Request[A]): Option[Future[Result]]
-  
-  def getRedirectAction[A](request: Request[A], newSession: Session, targetUrl: String, protectedPage: Boolean, isAjax: Boolean): RedirectAction
-  
-  def getAuthenticationRedirect[A](request: Request[A]): RedirectAction
-  
-  def getOrCreateSessionId[A](request: Request[A]): Session
 
 }

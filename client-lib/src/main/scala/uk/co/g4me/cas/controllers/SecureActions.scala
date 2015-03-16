@@ -8,6 +8,8 @@ import play.api.mvc.{ Action, ActionBuilder, Request, Result, Results, WrappedRe
 import uk.co.g4me.cas.models.CasUser
 import uk.co.g4me.cas.security.{ DefaultSecureHandler, SecureHandler}
 import org.slf4j.LoggerFactory
+import org.pac4j.play.java.RequiresAuthentication
+import org.pac4j.play.java.RequiresAuthenticationAction
 
 // Authenticated request class, only exists once a request has been passed through an Authenticate action
 case class AuthenticatedRequest[A](user: CasUser, request: Request[A]) extends WrappedRequest(request)
@@ -20,11 +22,11 @@ case class AuthenticatedRequest[A](user: CasUser, request: Request[A]) extends W
  */
 trait SecureActions extends Results {
   
-  def logger = LoggerFactory.getLogger("uk.co.g4me.cas.controllers.SecureActions")
+  def log = LoggerFactory.getLogger("uk.co.g4me.cas.controllers.SecureActions")
   
   case class PreAuthenticate[A](action: Action[A])(implicit val handler: SecureHandler) extends Action[A] {
     
-    logger.debug("PreAuthenticate")
+    log.debug("PreAuthenticate")
     
     lazy val parser = action.parser
     
@@ -38,47 +40,9 @@ trait SecureActions extends Results {
     }
   } // PreAuthenticate
   
-  case class Authenticate[A](action: Action[A])(implicit val handler: SecureHandler) extends Action[A] {
+  case class PreAuthorise[A](action: Action[A], implicit val handler: SecureHandler) extends Action[A] {
     
-    logger.debug("Authenticate")
-    
-    lazy val parser = action.parser
-    
-    def apply(request: Request[A]): Future[Result] = {
-      
-      val userOption = handler.getUser[A](request)
-      
-      if (userOption.isDefined) {
-        action(AuthenticatedRequest(userOption.get, request))  
-      } else {
-        //Future.successful(Unauthorized)
-        val redirectAction = handler.getAuthenticationRedirect(request)
-        val newSession = handler.getOrCreateSessionId(request)
-        
-        redirectAction.getType() match {
-          case RedirectAction.RedirectType.REDIRECT => Future.successful(Redirect(redirectAction.getLocation()).withSession(newSession))
-          case RedirectAction.RedirectType.SUCCESS => Future.successful(Ok(redirectAction.getContent()).withSession(newSession).as(ContentTypes.HTML))
-          case _ => throw new TechnicalException("Unexpected RedirectAction : " + redirectAction.getType)
-        }
-        
-      } // else
-    } // apply    
-  } // Authenticate
-      
-  object AuthenticatedAction extends ActionBuilder[Request] {
-    
-    logger.debug("AuthenticatedAction")
-    
-    def invokeBlock[A](request: Request[A], block: (Request[A]) => Future[Result]) = block(request)
-  
-    implicit val handler: SecureHandler = new DefaultSecureHandler
-  
-    override def composeAction[A](action: Action[A]) = Authenticate(PreAuthenticate(action))
-  }
-  
-  class PreAuthorise[A](action: Action[A], implicit val handler: SecureHandler) extends Action[A] {
-    
-    logger.debug("PreAuthorise")
+    log.debug("PreAuthorise")
     
     lazy val parser = action.parser
     
@@ -90,5 +54,32 @@ trait SecureActions extends Results {
       }     
     }
   } // PreAuthorise
+  
+//  cate[A](action: Action[A])(implicit val handler: SecureHandler) extends Action[A] {
+//    
+//    logger.debug("Authenticate")
+//    
+//    lazy val parser = action.parser
+//    
+//    def apply(request: Request[A]): Future[Result] = {
+//      
+//      val userOption = handler.getUser[A](request)
+//      
+//      if (userOption.isDefined) {
+//        action(AuthenticatedRequest(userOption.get, request))  
+//      } else {
+//        //Future.successful(Unauthorized)
+//        val redirectAction = handler.getAuthenticationRedirect(request)
+//        val newSession = handler.getOrCreateSessionId(request)
+//        
+//        redirectAction.getType() match {
+//          case RedirectAction.RedirectType.REDIRECT => Future.successful(Redirect(redirectAction.getLocation()).withSession(newSession))
+//          case RedirectAction.RedirectType.SUCCESS => Future.successful(Ok(redirectAction.getContent()).withSession(newSession).as(ContentTypes.HTML))
+//          case _ => throw new TechnicalException("Unexpected RedirectAction : " + redirectAction.getType)
+//        }
+//        
+//      } // else
+//    } // apply    
+//  } // Authenticate
   
 }
