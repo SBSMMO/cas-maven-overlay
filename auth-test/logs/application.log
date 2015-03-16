@@ -1,36 +1,15 @@
-2015-03-16 10:49:31,305 - [INFO] - from play in pool-4-thread-4 
+2015-03-16 15:23:00,403 - [INFO] - from play in pool-4-thread-3 
 Listening for HTTP on /0:0:0:0:0:0:0:0:9090
 
-2015-03-16 10:50:07,744 - [INFO] - from application in play-internal-execution-context-1 
+2015-03-16 15:23:39,916 - [INFO] - from application in play-internal-execution-context-1 
 Application has started
 
-2015-03-16 10:50:07,754 - [INFO] - from play in play-internal-execution-context-1 
+2015-03-16 15:23:39,925 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2015-03-16 10:50:07,875 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #1 
+2015-03-16 15:23:40,021 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #1 
 AuthenticatedAction
 
-2015-03-16 10:50:07,885 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #1 
+2015-03-16 15:23:40,028 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #1 
 PreAuthenticate
-
-2015-03-16 10:50:07,885 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #2 
-PreAuthenticate
-
-2015-03-16 10:50:07,885 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #1 
-Authenticate
-
-2015-03-16 10:50:07,887 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #2 
-Authenticate
-
-2015-03-16 10:50:36,413 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #2 
-PreAuthenticate
-
-2015-03-16 10:50:36,413 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #2 
-Authenticate
-
-2015-03-16 10:50:58,105 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #2 
-PreAuthenticate
-
-2015-03-16 10:50:58,107 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #2 
-Authenticate
 

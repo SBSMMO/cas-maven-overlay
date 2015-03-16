@@ -1,47 +1,59 @@
 package uk.co.g4me.cas.controllers
 
-import org.pac4j.play.scala.ScalaController
-import play.api.mvc.Action
-import uk.co.g4me.cas.security.SecureHandler
-import play.api.mvc.AnyContent
 import scala.concurrent.Future
-import play.api.mvc.Result
-import play.api.mvc.Request
+import org.pac4j.play.scala.ScalaController
+import be.objectify.deadbolt.scala.DeadboltHandler
+import play.api.mvc.Action
 import play.api.mvc.ActionBuilder
-import uk.co.g4me.cas.security.DefaultSecureHandler
-import org.slf4j.LoggerFactory
+import play.api.mvc.Request
+import play.api.mvc.Result
+import uk.co.g4me.cas.security.DefaultHandler
+import play.api.mvc.RequestHeader
+import org.pac4j.play.StorageHelper
+import org.pac4j.cas.profile.CasProfile
+import uk.co.g4me.cas.models.CasUser
+import org.pac4j.core.profile.CommonProfile
+import play.api.mvc.AnyContent
 
 trait SecureController extends ScalaController with SecureActions {
     
-  protected implicit val handler: SecureHandler = new DefaultSecureHandler
+  protected implicit val handler: DeadboltHandler = new DefaultHandler
   
   def Authenticate[A](action: Action[A]): Action[A] = {
-      log.debug("Authenticate")
-      RequiresAuthentication[A]("CasClient", "", action.parser, false) { profile => 
-        action
-      }  
+      PreAuthenticate(
+        RequiresAuthentication[A]("CasClient", "", action.parser, false) { profile =>
+          log.debug("Authenticate") 
+          action
+        }
+      )      
   }
   
-//  case class Authenticate[A](action: Action[A]) extends Action[A] {
-//    
+//  case class Authenticate[A](action: Action[A]) extends Action[A] {    
 //    logger.debug("Authenticate")
 //    
 //    lazy val parser = action.parser
 //    
 //    def apply(request: Request[A]): Action[A] = {  
-//      RequiresAuthentication[A]("CasClient", "", action.parser, false) { profile => 
+//      RequiresAuthentication[A]("CasClient", "", action.parser, false) { profile =>
 //          action
-//        }
-//      }  
+//      }
+//    }  
 //  }
   
-  object AuthenticatedAction extends ActionBuilder[Request] {
-    
+  
+  object AuthenticatedAction extends ActionBuilder[AuthenticatedRequest] {    
     log.debug("AuthenticatedAction")
     
-    def invokeBlock[A](request: Request[A], block: (Request[A]) => Future[Result]) = block(request)
-   
-    override def composeAction[A](action: Action[A]) = Authenticate(PreAuthenticate(action))
+    def invokeBlock[A](request: Request[A],block: (AuthenticatedRequest[A]) => Future[Result]) = {
+      
+      log.debug("AuthenticatedAction.invokeBlock")
+      
+      val user: CasUser = handler.getSubject(request).asInstanceOf[CasUser]
+     
+      block(AuthenticatedRequest(user, request)) 
+    }
+    
+    override def composeAction[A](action: Action[A]) = Authenticate(action)
   }
 
 }
