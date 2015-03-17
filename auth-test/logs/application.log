@@ -1,15 +1,18 @@
-2015-03-16 15:23:00,403 - [INFO] - from play in pool-4-thread-3 
+2015-03-17 12:36:18,927 - [INFO] - from play in pool-4-thread-5 
 Listening for HTTP on /0:0:0:0:0:0:0:0:9090
 
-2015-03-16 15:23:39,916 - [INFO] - from application in play-internal-execution-context-1 
+2015-03-17 12:36:29,650 - [INFO] - from application in play-internal-execution-context-1 
 Application has started
 
-2015-03-16 15:23:39,925 - [INFO] - from play in play-internal-execution-context-1 
+2015-03-17 12:36:29,661 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2015-03-16 15:23:40,021 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #1 
+2015-03-17 12:36:29,742 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #2 
 AuthenticatedAction
 
-2015-03-16 15:23:40,028 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #1 
+2015-03-17 12:36:29,750 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #2 
+PreAuthenticate
+
+2015-03-17 12:36:29,750 - [DEBUG] - from uk.co.g4me.cas.controllers.SecureActions in New I/O worker #1 
 PreAuthenticate
 

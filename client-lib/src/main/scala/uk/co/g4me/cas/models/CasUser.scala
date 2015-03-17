@@ -4,7 +4,11 @@ import org.pac4j.cas.profile.CasProfile
 import be.objectify.deadbolt.core.models.Subject
 import play.libs.Scala
 
-class CasUser(val userId: String) extends Subject {
+class CasUser(val profile: CasProfile) extends Subject {
+  
+  def userId: String = {
+    profile.getId
+  }
   
   def getRoles: java.util.List[SecurityRole] = {
     Scala.asJava(List(new SecurityRole("foo"),

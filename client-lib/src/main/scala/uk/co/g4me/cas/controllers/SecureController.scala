@@ -7,7 +7,6 @@ import play.api.mvc.Action
 import play.api.mvc.ActionBuilder
 import play.api.mvc.Request
 import play.api.mvc.Result
-import uk.co.g4me.cas.security.DefaultHandler
 import play.api.mvc.RequestHeader
 import org.pac4j.play.StorageHelper
 import org.pac4j.cas.profile.CasProfile
@@ -16,8 +15,6 @@ import org.pac4j.core.profile.CommonProfile
 import play.api.mvc.AnyContent
 
 trait SecureController extends ScalaController with SecureActions {
-    
-  protected implicit val handler: DeadboltHandler = new DefaultHandler()
   
   def Authenticate[A](action: Action[A]): Action[A] = {
       RequiresAuthentication[A]("CasClient", "", action.parser, false) { profile =>
@@ -33,14 +30,13 @@ trait SecureController extends ScalaController with SecureActions {
       
       log.debug("AuthenticatedAction.invokeBlock")
       
-      val handler: DeadboltHandler = new DefaultHandler()
-      
-      val user: CasUser = handler.getSubject(request).asInstanceOf[CasUser]
-     
-      block(AuthenticatedRequest(user, request)) 
+      val profile = getUserProfile(request).asInstanceOf[CasProfile]
+           
+      block(AuthenticatedRequest(new CasUser(profile), request)) 
     }
     
     override def composeAction[A](action: Action[A]) = Authenticate(PreAuthenticate(action))
   }
+  
 
 }
