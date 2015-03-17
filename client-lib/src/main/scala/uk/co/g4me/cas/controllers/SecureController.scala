@@ -14,10 +14,11 @@ import uk.co.g4me.cas.models.CasUser
 import org.pac4j.core.profile.CommonProfile
 import play.api.mvc.AnyContent
 import uk.co.g4me.cas.security.DefaultSecureHandler
+import uk.co.g4me.cas.security.DefaultSecureHandler
 
 trait SecureController extends ScalaController with SecureActions {
   
-  protected implicit def handler: DefaultSecureHandler
+  protected implicit def handler: DefaultSecureHandler = new DefaultSecureHandler
   
   def Authenticate[A](action: Action[A]): Action[A] = {
     log.debug("Authenticate") 
