@@ -14,12 +14,22 @@
 	  </tr>
 	</table>
 	<br />
+	<table class="table center table table-striped table-bordered">
+		<tr>
+		  <th>Roles:</th>
+		</tr>
+		@for(role <- request.user.getRoles) {
+		  <tr>
+		    <td>@role.getName</td>
+		  </tr>
+		}
+	</table>
 	<br />
 	<table class="table center table table-striped table-bordered">
 		<tr>
 		  <th>Permissions:</th>
 		</tr>
-		@for(permission <- request.user.getPermissions()) {
+		@for(permission <- request.user.getPermissions) {
 		  <tr>
 		    <td>@permission.getValue</td>
 		  </tr>
