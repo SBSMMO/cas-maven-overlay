@@ -9,7 +9,7 @@ import be.objectify.deadbolt.scala.DeadboltHandler
 import be.objectify.deadbolt.core.models.Subject
 import be.objectify.deadbolt.scala.DynamicResourceHandler
 
-class DefaultSecureHandler extends SecureHandler {
+class DefaultSecureHandler extends DeadboltHandler with SecureHandler {
   
   override def beforeAuthenticationCheck[A](request: Request[A]) = None
   

@@ -13,6 +13,7 @@ import play.api.mvc.WrappedRequest
 import uk.co.g4me.cas.models.CasUser
 import uk.co.g4me.cas.security.SecureHandler
 import uk.co.g4me.cas.security.DefaultSecureHandler
+import be.objectify.deadbolt.scala.DeadboltHandler
 
 // Authenticated request class, only exists once a request has been passed through an Authenticate action
 case class AuthenticatedRequest[A](user: CasUser, request: Request[A]) extends WrappedRequest(request)
@@ -42,7 +43,7 @@ trait SecureActions extends Results with BodyParsers {
     } // apply
   } // PreAuthenticate
   
-  case class PreAuthorise[A](action: Action[A])(implicit val handler: SecureHandler) extends Action[A] {
+  case class PreAuthorise[A](action: Action[A])(implicit val handler: DeadboltHandler) extends Action[A] {
     
     log.debug("PreAuthorise")
     
