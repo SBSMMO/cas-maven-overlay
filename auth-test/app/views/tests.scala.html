@@ -1,4 +1,4 @@
-@(handler: be.objectify.deadbolt.scala.DeadboltHandler)(implicit request: uk.co.g4me.cas.controllers.AuthenticatedRequest[AnyContent])
+@(secureHandler: uk.co.g4me.cas.security.SecureHandler)(implicit request: uk.co.g4me.cas.controllers.AuthenticatedRequest[AnyContent])
 
 @import be.objectify.deadbolt.core.utils.TemplateUtils._
 @import be.objectify.deadbolt.scala.views.html._
@@ -14,7 +14,7 @@
 		<td>Authenticated</td><td><i class="fa fa-check center"></i></td><td></td>
 	  </tr>
 	  <tr>
-		<td>Facebook Enabled</td><td>@restrictOr(handler, List(as("foo"))) {
+		<td>Facebook Enabled</td><td>@restrictOr(handler = secureHandler, roles = List(as("foo"))) {
   This content will be visible if the user has the "foo" role.
 }{
   This content will be visible if the user don't have the "foo" role.
