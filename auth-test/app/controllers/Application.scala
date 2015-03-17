@@ -11,10 +11,10 @@ import uk.co.g4me.cas.security.SecureHandler
 import security.CustomHandler
 
 object Application extends SecureController {
-  
+
   def index = AuthenticatedAction { implicit request =>
     
-    Ok(views.html.main("CAS Authentication Test App", views.html.tests(handler, request)))
+    Ok(views.html.main("CAS Authentication Test App", views.html.tests(handler)))
     
   }
 
