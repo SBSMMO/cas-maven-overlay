@@ -17,29 +17,14 @@ import play.api.mvc.AnyContent
 
 trait SecureController extends ScalaController with SecureActions {
     
-  protected implicit val handler: DeadboltHandler = new DefaultHandler
+  protected implicit val handler: DeadboltHandler = new DefaultHandler()
   
   def Authenticate[A](action: Action[A]): Action[A] = {
-      PreAuthenticate(
-        RequiresAuthentication[A]("CasClient", "", action.parser, false) { profile =>
-          log.debug("Authenticate") 
-          action
-        }
-      )      
-  }
-  
-//  case class Authenticate[A](action: Action[A]) extends Action[A] {    
-//    logger.debug("Authenticate")
-//    
-//    lazy val parser = action.parser
-//    
-//    def apply(request: Request[A]): Action[A] = {  
-//      RequiresAuthentication[A]("CasClient", "", action.parser, false) { profile =>
-//          action
-//      }
-//    }  
-//  }
-  
+      RequiresAuthentication[A]("CasClient", "", action.parser, false) { profile =>
+        log.debug("Authenticate") 
+        action
+      }    
+  }  
   
   object AuthenticatedAction extends ActionBuilder[AuthenticatedRequest] {    
     log.debug("AuthenticatedAction")
@@ -48,12 +33,14 @@ trait SecureController extends ScalaController with SecureActions {
       
       log.debug("AuthenticatedAction.invokeBlock")
       
+      val handler: DeadboltHandler = new DefaultHandler()
+      
       val user: CasUser = handler.getSubject(request).asInstanceOf[CasUser]
      
       block(AuthenticatedRequest(user, request)) 
     }
     
-    override def composeAction[A](action: Action[A]) = Authenticate(action)
+    override def composeAction[A](action: Action[A]) = Authenticate(PreAuthenticate(action))
   }
 
 }

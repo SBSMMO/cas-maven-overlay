@@ -16,7 +16,7 @@ object Application extends SecureController {
 //	}
 //  }
   
-  def index = AuthenticatedAction { profile =>
+  def index = AuthenticatedAction { request =>
     Ok(views.html.main("CAS Authentication Test App", views.html.tests()))
   }
 
