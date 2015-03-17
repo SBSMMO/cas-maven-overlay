@@ -4,13 +4,10 @@ import scala.concurrent.Future
 import play.api.mvc.{Request, Result}
 import uk.co.g4me.cas.models.CasUser
 import uk.co.g4me.cas.controllers.AuthenticatedRequest
+import be.objectify.deadbolt.scala.DeadboltHandler
 
-trait SecureHandler {
+trait SecureHandler extends DeadboltHandler {
   
-  def getUser[A](request: Request[A]): Future[Option[CasUser]]
+  def beforeAuthenticationCheck[A](request: Request[A]): Option[Future[Result]]  
   
-  def beforeAuthenticationCheck[A](request: Request[A]): Option[Future[Result]]
-  
-  def beforeAuthorisationCheck[A](request: Request[A]): Option[Future[Result]]
-
 }

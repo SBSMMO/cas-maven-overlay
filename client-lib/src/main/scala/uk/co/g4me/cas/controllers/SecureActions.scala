@@ -1,9 +1,7 @@
 package uk.co.g4me.cas.controllers
 
 import scala.concurrent.Future
-
 import org.slf4j.LoggerFactory
-
 import be.objectify.deadbolt.core.DeadboltAnalyzer
 import be.objectify.deadbolt.core.models.Subject
 import play.api.mvc.Action
@@ -14,6 +12,7 @@ import play.api.mvc.Results
 import play.api.mvc.WrappedRequest
 import uk.co.g4me.cas.models.CasUser
 import uk.co.g4me.cas.security.SecureHandler
+import uk.co.g4me.cas.security.DefaultSecureHandler
 
 // Authenticated request class, only exists once a request has been passed through an Authenticate action
 case class AuthenticatedRequest[A](user: CasUser, request: Request[A]) extends WrappedRequest(request)
@@ -50,7 +49,7 @@ trait SecureActions extends Results with BodyParsers {
     lazy val parser = action.parser
     
     def apply(request: Request[A]): Future[Result] = {
-      handler.beforeAuthorisationCheck(request) match {
+      handler.beforeAuthCheck(request) match {
         case Some(result) => result
         case _ => action(request) 
       }

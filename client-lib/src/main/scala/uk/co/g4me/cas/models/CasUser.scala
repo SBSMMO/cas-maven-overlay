@@ -13,7 +13,7 @@ class CasUser(val profile: CasProfile) extends Subject {
     profile.getId
   }
   
-  protected def getRoles: java.util.List[SecurityRole] = {
+  def getRoles: java.util.List[SecurityRole] = {
     val casRoles = profile.getRoles().asScala
     
     val roles = ListBuffer[SecurityRole]()
@@ -23,7 +23,7 @@ class CasUser(val profile: CasProfile) extends Subject {
     roles.asJava    
   }  
 
-  protected def getPermissions: java.util.List[UserPermission] = {
+  def getPermissions: java.util.List[UserPermission] = {
     val casPermissions = profile.getPermissions().asScala
     
     val permissions = ListBuffer[UserPermission]()
