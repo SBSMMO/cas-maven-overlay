@@ -1,6 +1,6 @@
-@()
+@(user: uk.co.g4me.cas.models.CasUser)
 <div class="panel center panel-default">
-  <div class="panel-heading"><h3>User: <a class="pull-right" href="/logout">logout</h3></a></div>
+  <div class="panel-heading"><h3>User: @user.userId<a class="pull-right" href="/logout">logout</h3></a></div>
   <div class="panel-body">
     <table class="table center table table-striped table-bordered">
 	  <tr>

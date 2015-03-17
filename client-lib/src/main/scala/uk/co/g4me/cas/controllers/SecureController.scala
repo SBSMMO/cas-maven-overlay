@@ -17,8 +17,9 @@ import play.api.mvc.AnyContent
 trait SecureController extends ScalaController with SecureActions {
   
   def Authenticate[A](action: Action[A]): Action[A] = {
-      RequiresAuthentication[A]("CasClient", "", action.parser, false) { profile =>
-        log.debug("Authenticate") 
+    log.debug("Authenticate") 
+    
+      RequiresAuthentication[A]("CasClient", "", action.parser, false) { profile =>        
         action
       }    
   }  
