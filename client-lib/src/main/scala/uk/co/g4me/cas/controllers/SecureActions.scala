@@ -1,18 +1,19 @@
 package uk.co.g4me.cas.controllers
 
 import scala.concurrent.Future
-import org.pac4j.core.client.RedirectAction
-import org.pac4j.core.exception.TechnicalException
-import play.api.http.ContentTypes
-import play.api.mvc.{ Action, ActionBuilder, Request, Result, Results, WrappedRequest }
-import uk.co.g4me.cas.models.CasUser
+
 import org.slf4j.LoggerFactory
-import org.pac4j.play.java.RequiresAuthentication
-import org.pac4j.play.java.RequiresAuthenticationAction
-import be.objectify.deadbolt.scala.DeadboltHandler
-import play.api.mvc.BodyParsers
-import be.objectify.deadbolt.core.models.Subject
+
 import be.objectify.deadbolt.core.DeadboltAnalyzer
+import be.objectify.deadbolt.core.models.Subject
+import play.api.mvc.Action
+import play.api.mvc.BodyParsers
+import play.api.mvc.Request
+import play.api.mvc.Result
+import play.api.mvc.Results
+import play.api.mvc.WrappedRequest
+import uk.co.g4me.cas.models.CasUser
+import uk.co.g4me.cas.security.SecureHandler
 
 // Authenticated request class, only exists once a request has been passed through an Authenticate action
 case class AuthenticatedRequest[A](user: CasUser, request: Request[A]) extends WrappedRequest(request)
@@ -27,30 +28,32 @@ trait SecureActions extends Results with BodyParsers {
   
   def log = LoggerFactory.getLogger("uk.co.g4me.cas.controllers.SecureActions")
   
-  case class PreAuthenticate[A](action: Action[A]) extends Action[A] {
+  case class PreAuthenticate[A](action: Action[A])(implicit val handler: SecureHandler) extends Action[A] {
     
     log.debug("PreAuthenticate")
     
     lazy val parser = action.parser
     
     def apply(request: Request[A]): Future[Result] = {      
-      //TODO: Add secure handler for customisable pre auth actions
-      action(request)     
+      handler.beforeAuthenticationCheck(request) match {
+        case Some(result) => result
+        case _ => action(request)
+      }
             
     } // apply
   } // PreAuthenticate
   
-  case class PreAuthorise[A](action: Action[A]) extends Action[A] {
+  case class PreAuthorise[A](action: Action[A])(implicit val handler: SecureHandler) extends Action[A] {
     
     log.debug("PreAuthorise")
     
     lazy val parser = action.parser
     
     def apply(request: Request[A]): Future[Result] = {
-      request match {
-        case authRequest: AuthenticatedRequest[A] => action(authRequest)
-        case _ => throw new IllegalArgumentException("Request has not been authenticated. Please wrap in an AuthenticatedAction")
-      }     
+      handler.beforeAuthorisationCheck(request) match {
+        case Some(result) => result
+        case _ => action(request) 
+      }
       
     } // apply
   } // PreAuthorise

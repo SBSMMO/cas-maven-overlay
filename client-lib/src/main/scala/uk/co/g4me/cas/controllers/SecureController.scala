@@ -13,8 +13,11 @@ import org.pac4j.cas.profile.CasProfile
 import uk.co.g4me.cas.models.CasUser
 import org.pac4j.core.profile.CommonProfile
 import play.api.mvc.AnyContent
+import uk.co.g4me.cas.security.DefaultSecureHandler
 
 trait SecureController extends ScalaController with SecureActions {
+  
+  protected implicit def handler: DefaultSecureHandler
   
   def Authenticate[A](action: Action[A]): Action[A] = {
     log.debug("Authenticate") 
@@ -37,7 +40,6 @@ trait SecureController extends ScalaController with SecureActions {
     }
     
     override def composeAction[A](action: Action[A]) = Authenticate(PreAuthenticate(action))
-  }
-  
+  }  
 
 }
