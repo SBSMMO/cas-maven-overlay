@@ -15,7 +15,7 @@ object Application extends SecureController {
   
   def index = AuthenticatedAction { implicit request =>
     
-    Ok(views.html.main("CAS Authentication Test App", views.html.tests(handler.asInstanceOf[DeadboltHandler])(request.asInstanceOf[Request[AnyContent]])))
+    Ok(views.html.main("CAS Authentication Test App", views.html.tests(handler)))
     
   }
 
