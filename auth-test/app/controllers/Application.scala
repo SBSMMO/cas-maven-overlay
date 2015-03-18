@@ -15,6 +15,8 @@ object Application extends SecureController {
   
   def index = AuthenticatedAction { implicit request =>
     
+    log.debug("Roles: ", request.user.getScalaRoles.mkString(", "))
+    
     Ok(views.html.main("CAS Authentication Test App", views.html.tests(handler)))
     
   }
