@@ -20,7 +20,7 @@ class DefaultSecureHandler extends DeadboltHandler with SecureHandler {
     }
   }
   
-  def getSubject[A](request: Request[A]): Future[Option[Subject]] = {
+  override def getSubject[A](request: Request[A]): Future[Option[Subject]] = {
     request match {
       case authRequest: AuthenticatedRequest[A] => Future.successful(Some(authRequest.user))
       case _ => Future.successful(None)

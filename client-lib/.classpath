@@ -26,7 +26,7 @@
   <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\xml-resolver\xml-resolver\jars\xml-resolver-1.2.jar"/>
   <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\xalan\xalan\jars\xalan-2.7.1.jar"/>
   <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\xalan\serializer\jars\serializer-2.7.1.jar"/>
-  <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\be.objectify\deadbolt-scala_2.11\jars\deadbolt-scala_2.11-2.3.1.jar"/>
+  <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\be.objectify\deadbolt-scala_2.11\jars\deadbolt-scala_2.11-2.3.2.jar"/>
   <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\com.typesafe.play\twirl-api_2.11\jars\twirl-api_2.11-1.0.2.jar"/>
   <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\org.apache.commons\commons-lang3\jars\commons-lang3-3.1.jar"/>
   <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\org.scala-lang.modules\scala-xml_2.11\bundles\scala-xml_2.11-1.0.1.jar"/>
@@ -51,7 +51,7 @@
   <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\javax.transaction\jta\jars\jta-1.1.jar"/>
   <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\com.typesafe.play\play-cache_2.11\jars\play-cache_2.11-2.3.1.jar"/>
   <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\net.sf.ehcache\ehcache-core\jars\ehcache-core-2.6.8.jar"/>
-  <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\be.objectify\deadbolt-core_2.11\jars\deadbolt-core_2.11-2.3.1.jar"/>
+  <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\be.objectify\deadbolt-core_2.11\jars\deadbolt-core_2.11-2.3.2.jar"/>
   <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\com.typesafe.play\play-java_2.11\jars\play-java_2.11-2.3.1.jar"/>
   <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\org.yaml\snakeyaml\bundles\snakeyaml-1.13.jar"/>
   <classpathentry kind="lib" path="C:\Users\nshaw\.ivy2\cache\org.hibernate\hibernate-validator\jars\hibernate-validator-5.0.3.Final.jar"/>
